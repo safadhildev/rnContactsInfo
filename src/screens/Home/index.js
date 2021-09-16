@@ -1,4 +1,5 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   ScrollView,
   FlatList,
@@ -26,8 +27,11 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [contacts, setContacts] = useState(data);
+
+  const _getData = () => {};
 
   const _onAddContact = () => {};
 
@@ -63,6 +67,10 @@ const Home = ({navigation}) => {
 
   const _onSearch = () => {};
   const _onAdd = () => {};
+
+  useEffect(() => {
+    _getData();
+  }, []);
 
   const _renderHeaderOption = ({type, onPress}) => {
     return (
