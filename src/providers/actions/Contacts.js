@@ -11,10 +11,12 @@ export const contactsReset = () => ({
   type: actions.RESET,
 });
 
-export const contactsRequest = search => ({
-  type: actions.CONTACTS.REQUEST,
-  value: search,
-});
+export const contactsRequest = data => {
+  return {
+    type: actions.CONTACTS.REQUEST,
+    payload: data,
+  };
+};
 
 export const contactsSuccess = data => ({
   type: actions.CONTACTS.SUCCESS,

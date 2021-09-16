@@ -1,4 +1,5 @@
-import {actions} from '../actions/Geocode';
+import {actions} from '../actions/Contacts';
+import data from '../../data.json';
 
 const initialState = {
   success: false,
@@ -9,15 +10,9 @@ const initialState = {
 const contactsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.CONTACTS.REQUEST:
+      console.log({action});
       return {
         ...state,
-        loading: true,
-        errors: {},
-      };
-    case actions.CONTACTS.SUCCESS:
-      return {
-        ...state,
-        success: true,
         loading: true,
         data: action.payload,
       };

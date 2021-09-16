@@ -14,6 +14,7 @@ import Item from '../../components/Item';
 
 import Search from '../../../assets/search.svg';
 import Add from '../../../assets/add.svg';
+import {contactsRequest} from '../../providers/actions/Contacts';
 
 const data = require('../../data.json');
 
@@ -29,9 +30,17 @@ const styles = StyleSheet.create({
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const [contacts, setContacts] = useState(data);
+  // const [contactsData, setContactsData] = useState(data);
 
-  const _getData = () => {};
+  const contacts = useSelector(state => {
+    return state.data;
+  });
+
+  console.log(contacts);
+
+  const _getData = () => {
+    dispatch(contactsRequest(data));
+  };
 
   const _onAddContact = () => {};
 
@@ -44,9 +53,7 @@ const Home = ({navigation}) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    setContacts([]);
     setTimeout(() => {
-      setContacts(data);
       setRefreshing(false);
     }, 500);
   }, []);
@@ -97,14 +104,16 @@ const Home = ({navigation}) => {
           },
         })}
       />
-      <FlatList
-        data={contacts}
-        renderItem={_renderItem}
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
+      {contacts && (
+        <FlatList
+          data={contacts}
+          renderItem={_renderItem}
+          contentContainerStyle={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };
