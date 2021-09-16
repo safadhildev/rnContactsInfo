@@ -14,6 +14,13 @@ const contactsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        data,
+      };
+    case actions.CONTACTS.UPDATE:
+      console.log(action);
+      return {
+        ...state,
+        loading: true,
         data: action.payload,
       };
     case actions.RESET:

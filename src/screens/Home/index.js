@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 import {
   ScrollView,
   FlatList,
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({navigation}) => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   // const [contactsData, setContactsData] = useState(data);
@@ -77,7 +79,7 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     _getData();
-  }, []);
+  }, [isFocused]);
 
   const _renderHeaderOption = ({type, onPress}) => {
     return (

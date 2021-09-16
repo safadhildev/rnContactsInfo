@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
 import AppBar from '../../components/AppBar';
 import Field from '../../components/Field';
+import {contactsUpdate} from '../../providers/actions/Contacts';
 
 const styles = StyleSheet.create({
   circle: {
@@ -50,7 +53,12 @@ const initialData = {
 };
 
 const Details = ({route, navigation}) => {
+  const dispatch = useDispatch();
   const {data} = route.params;
+
+  const contacts = useSelector(state => {
+    return state.data;
+  });
 
   console.log({data});
   const [contact, setContact] = useState(data || initialData);
@@ -63,7 +71,13 @@ const Details = ({route, navigation}) => {
     navigation.goBack();
   };
 
-  const _onSaveContact = () => {};
+  const _onSaveContact = () => {
+    let updatedArr = contacts;
+    const index = contacts.findIndex(item => item.id === contact.id);
+    updatedArr[index] = contact;
+    dispatch(contactsUpdate(updatedArr));
+    navigation.goBack();
+  };
 
   const _onSave = () => {
     if (!contact?.firstName) {
